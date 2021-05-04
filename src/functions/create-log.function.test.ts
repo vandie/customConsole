@@ -103,15 +103,17 @@ describe('createLog', () => {
     it('handles custom typeChecks correctly', () => {
       const callback = jest.fn();
       const customNumberParser = jest.fn().mockImplementation((num: string) => (parseInt(num) + 1).toString());
+      const customTypeChecker = jest.fn().mockImplementation((variable: any) => (typeof variable === 'string' ? 'customNumber' : typeof variable));
       const options: LogOptions = {
         customParsers: {
           'customNumber': customNumberParser
         },
-        customTypeChecker: (variable: any) => (typeof variable === 'string' ? 'customNumber' : typeof variable)
+        customTypeChecker
       };
       const log = createLog(callback, options);
 
       log('2');
+      expect(customTypeChecker).toHaveBeenCalledWith('2');
       expect(customNumberParser).toHaveBeenCalledWith('2', options);
       expect(callback).toHaveBeenCalledWith('3');
     });
