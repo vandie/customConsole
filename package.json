@@ -1,12 +1,13 @@
 {
   "name": "@vandie/customconsole",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Allows you to create a custom output console log style function",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "files": [
-    "/dist"
+    "/dist",
+    "LICENSE"
   ],
   "scripts": {
     "test": "jest",
