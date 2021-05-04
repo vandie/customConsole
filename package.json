@@ -1,12 +1,19 @@
 {
   "name": "@vandie/customconsole",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Allows you to create a custom output console log style function",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "files": [
+    "/dist",
+    "/src"
+  ],
   "scripts": {
     "test": "jest",
     "build": "rollup -c rollup.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vandie/customConsole.git"
   },
   "keywords": [
     "console",
