@@ -2,7 +2,7 @@ import { LogCallback, LogFunction, LogOptions, Parser } from "../types";
 import * as inbuiltParsers from './parsers';
 
 export const createLog = (output: LogCallback, options: LogOptions = {}): LogFunction => {
-  const parsers = options.customParsers ? {
+  const parsers: {[type: string]: Parser<any>} = options.customParsers ? {
     ...inbuiltParsers,
     ...options.customParsers
   } : inbuiltParsers;
@@ -10,10 +10,9 @@ export const createLog = (output: LogCallback, options: LogOptions = {}): LogFun
   return (...args: any) => {
     let prefixs = '';
     let text = args.map((value: any) => {
-      const type = typeof value;
-      const parser: Parser<typeof value> = parsers[type];
-      if(parser) return parser(value, options);
-      else return `[unrecognisedType ${type}]`;
+      const type: string = options.customTypeChecker ? options.customTypeChecker(value) : typeof value;
+      const parser = parsers[type];
+      return parser ? parser(value, options) : `[unrecognisedType ${type}]`;
     }).join(options.separator || '\n');
     
     if(options.includeTimestamp) prefixs = ` ${Date.now()}`;

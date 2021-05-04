@@ -1,5 +1,6 @@
 import { createLog } from './create-log.function';
 import { set as setMockDate } from 'mockdate';
+import { LogOptions } from '../types';
 
 describe('createLog', () => {
   afterEach(() => jest.restoreAllMocks());
@@ -97,6 +98,22 @@ describe('createLog', () => {
 
       log('Example');
       expect(callback).toHaveBeenCalledWith('1434319925275: Example');
+    });
+
+    it('handles custom typeChecks correctly', () => {
+      const callback = jest.fn();
+      const customNumberParser = jest.fn().mockImplementation((num: string) => (parseInt(num) + 1).toString());
+      const options: LogOptions = {
+        customParsers: {
+          'customNumber': customNumberParser
+        },
+        customTypeChecker: (variable: any) => (typeof variable === 'string' ? 'customNumber' : typeof variable);
+      };
+      const log = createLog(callback, options);
+
+      log('The answers are: ', 2, 6, 1 ,4);
+      expect(customNumberParser).toHaveBeenCalledWith('2', options);
+      expect(callback).toHaveBeenCalledWith(`The answers are: \n3`);
     });
   });
 })

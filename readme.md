@@ -33,6 +33,7 @@ logger("Pass any data types you want", { vip: true }, 3);
 | stringifyObjects | Boolean     | If `true`, objects and arrays will be displayed using `JSON.stringify` rather than as `[object Object]` |
 | separator   | String           | As with `console.log` each argument passed to your logger will be split with a new line character (`\n`). This argument allows you to replace that character with anything you see fit. |
 | customParsers   | A key value store, where the keys are variable types (as returned by `typeof`) and the values is a parser function that you wish to call for this type             | Allows you to define custom parsers for the logger to use  |
+| customTypeChecker | `(variable: any) => string` | Sets the function to use, to get the string `type` of a variable eg. `"string"` or `"number"`. If not set, will internally use typeof. This allows you to add support for custom typescript types.  |
 
 ### console.log replacement
 Generally speaking you don't want to replace `console.log` as modifying prototypes is frowned upon. However, if you are attempting to have `console.log` calls output to a ui element from code you otherwise cannot modify (eg. a module from a third party), you can call
