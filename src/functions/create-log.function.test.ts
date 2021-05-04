@@ -107,13 +107,13 @@ describe('createLog', () => {
         customParsers: {
           'customNumber': customNumberParser
         },
-        customTypeChecker: (variable: any) => (typeof variable === 'string' ? 'customNumber' : typeof variable);
+        customTypeChecker: (variable: any) => (typeof variable === 'string' ? 'customNumber' : typeof variable)
       };
       const log = createLog(callback, options);
 
-      log('The answers are: ', 2, 6, 1 ,4);
+      log('2');
       expect(customNumberParser).toHaveBeenCalledWith('2', options);
-      expect(callback).toHaveBeenCalledWith(`The answers are: \n3`);
+      expect(callback).toHaveBeenCalledWith('3');
     });
   });
 })
